@@ -64,6 +64,13 @@ router.get("/allPosts", asyncHandler(async(req, res) => {
   const posts = await Post.find();
   const locals = {title : "admin"};
   res.render("admin/allPosts", {posts, locals, layout : adminLayout});
+}));
+
+//logout
+//GET /logout
+router.get("/logout", asyncHandler(async(req, res)=> {
+  res.clearCookie("token", {httpOnly:true}); 
+  res.redirect("/");
 }))
 
 
