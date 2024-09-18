@@ -1,15 +1,19 @@
 <h3>All Posts</h3>
-<ul>
+<ul class="article-ul">
   <% posts.forEach((post)=>{ %>
-    <li>
+    <li class="allPosts">
       <div>
         <%= post.title %>
       </div>
-      <div>
-        <a><button>modify</button></a>
+      <div class="admin-btns">
+        <div class="admmin-btn">
+          <a><button>modify</button></a>
+        </div>
+        <div class="admmin-btn">
         <form action="/" method="POST">
-          <input type="submit" value="delete" class="btn" />
+          <input type="submit" value="delete" class="admin-delete-btn" />
         </form>
+        </div>
       </div>
     </li>
   <% }) %>
