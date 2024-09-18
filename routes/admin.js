@@ -73,5 +73,38 @@ router.get("/logout", asyncHandler(async(req, res)=> {
   res.redirect("/");
 }))
 
+//get write new post page
+//GET /writePost
+router.get("/writePost", async(req, res)=>{
+  res.render("admin/writePost", {layout : adminLayout});
+})
+//write new post
+//POST /writePost
+router.post("/writePost", asyncHandler(async(req, res)=>{
+  const {title, body} = req.body;
+  const newPost = await Post.create({title, body, createdAt:Date.now()});
+  res.redirect("/allPosts")
+}))
+
+//get edit post page
+//GET /admin/editPost/Id
+router.get("/editPost/:id", asyncHandler(async(req, res)=>{
+  const editPost = await Post.findById(req.params.id);
+  res.render("admin/editPost", {editPost, layout : adminLayout});
+}))
+//put edit post page
+//PUT /admin/editPost/Id
+router.put("/editPost/:id", asyncHandler(async(req, res)=>{
+  const {title, body} = req.body;
+  const editPost = await Post.findByIdAndUpdate(req.params.id,{title, body});
+  res.redirect("/allPosts");
+}))
+
+//delete post
+//POST /admin/editPost/:id
+router.delete("/deletePost/:id", asyncHandler(async(req, res)=>{
+  const deletePost = await Post.findByIdAndDelete(req.params.id);
+  res.redirect("/allPosts");
+}))
 
 module.exports= router;
