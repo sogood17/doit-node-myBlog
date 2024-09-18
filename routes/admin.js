@@ -5,12 +5,38 @@ const adminLayout = "../views/layouts/admin.ejs";
 const loginLayout = "../views/layouts/admin.ejs";
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const jwtSecret = process.env.JWT_SECRET;
 
 router.get("/admin", async(req, res)=> {
   const locals = {title : "admin"};
   res.render("admin", { locals, layout: loginLayout })
 });
 
+//check login
+//POST /admin
+router.post("/admin", asyncHandler(async(req, res)=> {
+  const {username, password} = req.body;
+  //find user from DB
+  const user = await User.findOne({username})
+  //if can't find user
+  if (!user) {
+    return res.status(401).json({message:"Please check your username or password!"});
+  }
+  //if password doesn't match
+  const isValidPassword = await bcrypt.compare(password, user.password);
+  if (!isValidPassword) {
+    return res.status(401).json({message:"Please check your username or password!"});
+  }  
+  //if password match
+  // if (isValidPassword) {
+    const token = jwt.sign({id:user._id}, jwtSecret);
+    res.cookie("token", token, {httpOnly:true});
+    res.redirect("/allPosts");
+  // }
+  
+}))
 
 router.get("/register", async(req, res)=>{
   res.render("admin/register", {layout: loginLayout})
