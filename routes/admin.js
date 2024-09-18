@@ -8,6 +8,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const jwtSecret = process.env.JWT_SECRET;
+const Post = require("../models/Post");
 
 router.get("/admin", async(req, res)=> {
   const locals = {title : "admin"};
@@ -56,6 +57,14 @@ router.post("/register", asyncHandler(async(req, res)=>{
     res.json(`user created : ${user}`);
   }
 }));
+
+//admin loged in
+//GET /allPosts
+router.get("/allPosts", asyncHandler(async(req, res) => {
+  const posts = await Post.find();
+  const locals = {title : "admin"};
+  res.render("admin/allPosts", {posts, locals, layout : adminLayout});
+}))
 
 
 module.exports= router;

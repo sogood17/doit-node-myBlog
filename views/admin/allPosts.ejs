@@ -1,0 +1,16 @@
+<h3>All Posts</h3>
+<ul>
+  <% posts.forEach((post)=>{ %>
+    <li>
+      <div>
+        <%= post.title %>
+      </div>
+      <div>
+        <a><button>modify</button></a>
+        <form action="/" method="POST">
+          <input type="submit" value="delete" class="btn" />
+        </form>
+      </div>
+    </li>
+  <% }) %>
+</ul>
