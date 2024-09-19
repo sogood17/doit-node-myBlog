@@ -1,0 +1,22 @@
+      <!-- top -->
+      <div class="top">
+        <h1 class="top-heading">Violet's blog</h1>
+        <p class="top-body">This is my blog. Violet Dream!</p>
+      </div>
+
+      <img src="/img/top-hero.jpg" alt="노트에 기록하는 모습" class="hero-image" width="840" height="400">
+
+      <!-- recent post -->
+      <section class="articles">
+        <h2 class="articles-heading">recent post</h2>
+        <ul class="article-ul">
+          <%  data.forEach((post) => { %>
+            <li>
+              <a href="/post/<%= post.id %>">
+                <span><%= post.title %></span>
+                <span class="article-list-date"><%= post.createdAt.toDateString() %></span>
+              </a>
+            </li>
+          <% }) %>
+        </ul>
+      </section>
