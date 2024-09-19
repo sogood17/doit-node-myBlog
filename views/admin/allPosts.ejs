@@ -1,0 +1,21 @@
+<h3>All Posts</h3>
+<a href="/writePost"><button>Write new post</button></a>
+<ul class="article-ul">
+  <% posts.forEach((post)=>{ %>
+    <li class="allPosts">
+      <div>
+        <%= post.title %>
+      </div>
+      <div class="admin-btns">
+        <div class="admmin-btn">
+          <a href="/editPost/<%= post._id %>"><button>modify</button></a>
+        </div>
+        <div class="admmin-btn">
+        <form action="/deletePost/<%= post._id %>?_method=DELETE" method="POST">
+          <input type="submit" value="delete" class="admin-delete-btn" />
+        </form>
+        </div>
+      </div>
+    </li>
+  <% }) %>
+</ul>
